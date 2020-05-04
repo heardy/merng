@@ -1,4 +1,4 @@
-# merng
+# MERNG (MERN + GraphQL)
 GraphQL server that uses Node and Express to communicate to a MongoDB Database (MERN + GraphQL)
 
 Code base - https://github.com/hidjou/classsed-graphql-mern-apollo/
