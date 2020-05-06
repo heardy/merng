@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 function PostCard({ post }) {
-  const { body, createdAt, id, username, likeCount, commentCount, likes } = post;
+  const { body, createdAt, id, username, likeCount, commentCount } = post;
 
   dayjs.extend(relativeTime);
 
