@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "serve": "node index",
-    "start": "nodemon index"
+    "serve": "nodemon index",
+    "start": "node index"
   },
   "dependencies": {
     "apollo-server": "^2.12.0",
