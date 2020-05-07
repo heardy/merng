@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import React, { Fragment } from 'react';
+import { Button, Form, Message } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -24,7 +24,8 @@ function PostForm() {
       });
 
       values.body = '';
-    }
+    },
+    onError() {}
   });
 
   function createPostCallback() {
@@ -32,20 +33,29 @@ function PostForm() {
   }
 
   return (
-    <Form onSubmit={onSubmit}>
-      <h2>Create a post:</h2>
-      <Form.Field>
-        <Form.Input
-          placeholder="Hi World!"
-          name="body"
-          onChange={onChange}
-          value={values.body}
+    <Fragment>
+      <Form onSubmit={onSubmit}>
+        <h2>Create a post:</h2>
+        <Form.Group widths='equal'>
+          <Form.Input
+            placeholder="Hi World!"
+            name="body"
+            onChange={onChange}
+            value={values.body}
+            error={!!error}
+          />
+          <Button type="submit" color="teal">
+            Submit
+          </Button>
+        </Form.Group>
+      </Form>
+      {error && (
+        <Message
+          error={true}
+          content={error.graphQLErrors[0].message}
         />
-        <Button type="submit" color="teal">
-          Submit
-        </Button>
-      </Form.Field>
-    </Form>
+      )}
+    </Fragment>
   )
 }
 

@@ -1,21 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Card, Icon, Label, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+import { AuthContext } from '../context/auth';
+import LikeButton from './LikeButton';
+import DeleteButton from './DeleteButton';
+
 function PostCard({ post }) {
-  const { body, createdAt, id, username, likeCount, commentCount } = post;
+  const { body, createdAt, id, username, likes, likeCount, commentCount } = post;
+  const { user } = useContext(AuthContext);
 
   dayjs.extend(relativeTime);
-
-  function likePost() {
-    console.log('like post', id);
-  }
-
-  function commentOnPost() {
-    console.log('comment on post', id);
-  }
 
   return (
     <Card fluid>
@@ -30,15 +27,8 @@ function PostCard({ post }) {
         <Card.Description>{body}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button as='div' labelPosition='right' onClick={likePost}>
-          <Button color='teal' basic>
-            <Icon name='heart' />
-          </Button>
-          <Label basic color='teal' pointing='left'>
-            {likeCount}
-          </Label>
-        </Button>
-        <Button as='div' labelPosition='right' onClick={commentOnPost}>
+        <LikeButton user={user} post={{ id, likes, likeCount }} />
+        <Button labelPosition='right' as={Link} to={`/posts/${id}`}>
           <Button color='blue' basic>
             <Icon name='comments' />
           </Button>
@@ -46,6 +36,7 @@ function PostCard({ post }) {
             {commentCount}
           </Label>
         </Button>
+        {user && user.username === username && <DeleteButton postId={id} />}
       </Card.Content>
     </Card>
   );
