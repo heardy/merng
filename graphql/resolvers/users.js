@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const { UserInputError } = require('apollo-server');
 
 const { validateRegisterInput, validateLoginInput } = require('../../util/validators')
-const { SECRET_KEY } = require('../../config')
 const User = require('../../models/User');
 
 function generateToken(user) {
@@ -11,7 +10,9 @@ function generateToken(user) {
     id: user.id,
     email: user.email,
     username:user.username
-  }, SECRET_KEY, { expiresIn: '1h' });
+  },
+  process.env.SECRET_KEY,
+  { expiresIn: '1h' });
 }
 
 module.exports = {
